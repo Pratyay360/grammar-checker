@@ -5,7 +5,8 @@ import 'dotenv/config'
 import './style.css'
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai"
 
-const API = process.env.GOOGLE!
+// const API = process.env.GOOGLE
+const API = "AIzaSyA3oVuz97gt8nTy8fm6iJBX5Z5JsGk5TU0"
 
 export default function Grammar() {
 
@@ -16,7 +17,7 @@ export default function Grammar() {
         message.style.display = "none";
     }
     async function rewriteSentence() {
-        console.log(API)
+        // console.log(API)
         const genAI = new GoogleGenerativeAI(API);
         const MODEL_NAME = "gemini-pro";
         const generationConfig = {
@@ -56,7 +57,7 @@ export default function Grammar() {
         }
     }
     async function grammarCheck() {
-        console.log(API)
+        // console.log(API)
         const genAI = new GoogleGenerativeAI(API);
         const MODEL_NAME = "gemini-pro";
         const generationConfig = {
