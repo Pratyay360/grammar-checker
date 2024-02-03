@@ -5,9 +5,8 @@ import 'dotenv/config'
 import './style.css'
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai"
 
-// const API = process.env.GOOGLE
-
 export default function Grammar() {
+    const API = process.env.NEXT_PUBLIC_API 
 
     async function messageShow(s: string) {
         let message = document.getElementById(s) as HTMLElement
