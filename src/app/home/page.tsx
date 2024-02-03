@@ -6,7 +6,6 @@ import './style.css'
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai"
 
 // const API = process.env.GOOGLE
-const API = "AIzaSyA3oVuz97gt8nTy8fm6iJBX5Z5JsGk5TU0"
 
 export default function Grammar() {
 
