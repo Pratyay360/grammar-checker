@@ -31,7 +31,7 @@ export default function Grammar() {
                 threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
             },
         ];
-        let input = document.getElementById("input") as HTMLElement
+        let input = document.getElementById("input") as HTMLInputElement
         let text = input.value || ''
         if (text.length == 0) {
             messageShow("altererr");
@@ -71,7 +71,7 @@ export default function Grammar() {
                 threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
             },
         ];
-        let input = document.getElementById("input") as HTMLElement
+        let input = document.getElementById("input") as HTMLInputElement
         let text = input.value || ''
         if (text.length == 0) {
             messageShow("altererr");
