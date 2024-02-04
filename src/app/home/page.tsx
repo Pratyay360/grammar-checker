@@ -20,9 +20,10 @@ export default function Grammar() {
         const MODEL_NAME = "gemini-pro";
         const generationConfig = {
             temperature: 0.45,
+            candidateCount: 1,
             topK: 1,
             topP: 1,
-            maxOutputTokens: 2048,
+            maxOutputTokens: 1024,
         };
         const model = genAI.getGenerativeModel({ model: MODEL_NAME });
         const safetySettings = [
@@ -60,9 +61,10 @@ export default function Grammar() {
         const MODEL_NAME = "gemini-pro";
         const generationConfig = {
             temperature: 0.45,
+            candidateCount: 1,
             topK: 1,
             topP: 1,
-            maxOutputTokens: 2048,
+            maxOutputTokens: 1024,
         };
         const model = genAI.getGenerativeModel({ model: MODEL_NAME });
         const safetySettings = [
