@@ -2,18 +2,14 @@
 import React from "react"
 import { useState, useEffect } from "react"
 import 'dotenv/config'
+import { Toaster, toast } from 'sonner'
+
 import './style.css'
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai"
 
 export default function Grammar() {
     const API = process.env.NEXT_PUBLIC_API!
 
-    async function messageShow(s: string) {
-        let message = document.getElementById(s) as HTMLElement
-        message.style.display = "block";
-        await new Promise(r => setTimeout(r, 2000));
-        message.style.display = "none";
-    }
     async function rewriteSentence() {
         // console.log(API)
         const genAI = new GoogleGenerativeAI(API);
@@ -35,7 +31,7 @@ export default function Grammar() {
         let input = document.getElementById("input") as HTMLInputElement
         let text = input.value || ''
         if (text.length == 0) {
-            messageShow("altererr");
+            toast.error("Please enter a sentence to rewrite")
         } else {
             sessionStorage.setItem("oldSentence", text)
             const parts = [
@@ -51,8 +47,9 @@ export default function Grammar() {
 
             const response = result.response;
             let a = Array.isArray(response) ? response[0]?.candidates?.[0]?.content?.parts?.[0]?.text : response?.candidates?.[0]?.content?.parts?.[0]?.text
-            input.value = a
-            messageShow("changed")
+            input.value = a.replace(/"/, '')
+            input.value = a.replace(/,"/, '')
+            toast.success("Rewritten successfully")
         }
     }
     async function grammarCheck() {
@@ -76,7 +73,7 @@ export default function Grammar() {
         let input = document.getElementById("input") as HTMLInputElement
         let text = input.value || ''
         if (text.length == 0) {
-            messageShow("altererr");
+            toast.error("Please enter a sentence to check")
         } else {
             sessionStorage.setItem("oldSentence", text)
             const parts = [
@@ -92,8 +89,9 @@ export default function Grammar() {
 
             const response = result.response;
             let a = Array.isArray(response) ? response[0]?.candidates?.[0]?.content?.parts?.[0]?.text : response?.candidates?.[0]?.content?.parts?.[0]?.text
-            input.value = a
-            messageShow("changed")
+            input.value = a.replace(/"/, '')
+            input.value = a.replace(/,"/, '')
+            toast.success("Corrected successfully")
         }
     }
     async function replacePrevious() {
@@ -102,10 +100,10 @@ export default function Grammar() {
         if ((old?.length ?? 0) > 0) {
             // console.log(old)
             input.value = old as string
-            messageShow("changed")
+            toast.success("Replaced successfully")
         }
         else {
-            messageShow("copynotice")
+            toast.error("No previous sentence found")
         }
     }
     function copy() {
@@ -114,11 +112,11 @@ export default function Grammar() {
         let a = input.value
         if (a.length > 0) {
             navigator.clipboard.writeText(a).then(async function () {
-                messageShow("success");
+                toast.success("Copied successfully")
             })
         }
         else {
-            messageShow("copynotice")
+            toast.error("No text to copy")
         }
     }
 
@@ -135,50 +133,7 @@ export default function Grammar() {
                 <button onClick={copy} id="cpy" className="border border-indigo-600 hover:bg-indigo-600 bg-black text-white rounded-lg py-3 font-semibold px-2">Copy</button>
             </div>
 
-
-
-
-
-            {/* Alerts */}
-            <div className="m-5 p-10">
-                <div className="items-center p-4 mb-4 text-sm text-green-800 border border-green-300 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 dark:border-green-800" role="alert" id="success">
-                    <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                    </svg>
-                    <span className="sr-only">Info</span>
-                    <div>
-                        <span className="font-medium">Copied !!!</span>
-                    </div>
-                </div>
-                <div className="items-center p-4 mb-4 text-sm text-green-800 border border-green-300 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 dark:border-green-800" role="alert" id="changed">
-                    <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                    </svg>
-                    <span className="sr-only">Info</span>
-                    <div>
-                        <span className="font-medium">Changed</span>
-                    </div>
-                </div>
-                <div className=" items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800" role="alert" id="copynotice">
-                    <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                    </svg>
-                    <span className="sr-only">Info</span>
-                    <div>
-                        <span className="font-medium"> No sentence to replace / copy</span>
-                    </div>
-                </div>
-                <div className="items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800" role="alert" id="altererr">
-                    <svg className="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                    </svg>
-                    <span className="sr-only">Info</span>
-                    <div>
-                        <span className="font-medium"> No String to alter</span>
-                    </div>
-                </div>
-
-            </div>
+            <Toaster richColors closeButton position="bottom-right" expand={false} />        
 
         </>
     )
