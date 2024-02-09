@@ -3,8 +3,6 @@ import React from "react"
 import { useState, useEffect } from "react"
 import 'dotenv/config'
 import { Toaster, toast } from 'sonner'
-
-import './style.css'
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai"
 
 export default function Grammar() {
