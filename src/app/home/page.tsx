@@ -47,8 +47,8 @@ export default function Grammar() {
 
             const response = result.response;
             let a = Array.isArray(response) ? response[0]?.candidates?.[0]?.content?.parts?.[0]?.text : response?.candidates?.[0]?.content?.parts?.[0]?.text
-            input.value = a.replace(/"/, '')
-            input.value = a.replace(/,"/, '')
+            input.value = a.replace(/"/g, '')
+            input.value = a.replace(/,"/g, '')
             toast.success("Rewritten successfully")
         }
     }
@@ -89,8 +89,8 @@ export default function Grammar() {
 
             const response = result.response;
             let a = Array.isArray(response) ? response[0]?.candidates?.[0]?.content?.parts?.[0]?.text : response?.candidates?.[0]?.content?.parts?.[0]?.text
-            input.value = a.replace(/"/, '')
-            input.value = a.replace(/,"/, '')
+            input.value = a.replace(/"/g, '')
+            input.value = a.replace(/,"/g, '')
             toast.success("Corrected successfully")
         }
     }
