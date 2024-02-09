@@ -1,7 +1,7 @@
 "use client"
 import React from "react"
 import { useState, useEffect } from "react"
-import 'dotenv/config'
+
 import { Toaster, toast } from 'sonner'
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai"
 
@@ -33,7 +33,7 @@ export default function Grammar() {
         } else {
             sessionStorage.setItem("oldSentence", text)
             const parts = [
-                { text: "rewrite this sentence like a pro : " + text },
+                { text: "rewrite this sentence like a pro (GIVE ONLY 1 RESPONSE) : " + text },
             ];
 
             const result = await model.generateContent({
@@ -45,8 +45,12 @@ export default function Grammar() {
 
             const response = result.response;
             let a = Array.isArray(response) ? response[0]?.candidates?.[0]?.content?.parts?.[0]?.text : response?.candidates?.[0]?.content?.parts?.[0]?.text
-            input.value = a.replace(/"/g, '')
-            input.value = a.replace(/,"/g, '')
+            // console.log(a)
+            a=a.replace(/"/g, '')
+            a=a.replace(/,"/g, '')
+            a=a.replace(/."/g, '')
+            a=a.split('"').join('')
+            input.value = a
             toast.success("Rewritten successfully")
         }
     }
@@ -75,7 +79,7 @@ export default function Grammar() {
         } else {
             sessionStorage.setItem("oldSentence", text)
             const parts = [
-                { text: "make this sentence grammatically correct : " + text },
+                { text: "make this sentence grammatically correct (GIVE ONLY 1 RESPONSE) : " + text },
             ];
 
             const result = await model.generateContent({
@@ -87,8 +91,11 @@ export default function Grammar() {
 
             const response = result.response;
             let a = Array.isArray(response) ? response[0]?.candidates?.[0]?.content?.parts?.[0]?.text : response?.candidates?.[0]?.content?.parts?.[0]?.text
-            input.value = a.replace(/"/g, '')
-            input.value = a.replace(/,"/g, '')
+            a=a.replace(/"/g, '')
+            a=a.replace(/,"/g, '')
+            a=a.replace(/."/g, '')
+            a=a.split('"').join('')
+            input.value = a 
             toast.success("Corrected successfully")
         }
     }
