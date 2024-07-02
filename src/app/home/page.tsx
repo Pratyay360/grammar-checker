@@ -75,7 +75,7 @@ export default function Grammar() {
         let input = document.getElementById("input") as HTMLInputElement
         let text = input.value || ''
         if (text.length == 0) {
-            toast.error("Please enter a sentence to check")
+            toast.error("Please enter a sentence to summarize")
         } else {
             sessionStorage.setItem("oldSentence", text)
             const parts = [
