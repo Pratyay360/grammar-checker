@@ -1,6 +1,5 @@
 import React from "react";
 import { Toaster, toast } from "sonner";
-import genAi from "../../../lib/genai";
 
 export default function Grammar() {
   async function rewriteSentence() {
@@ -66,6 +65,7 @@ export default function Grammar() {
       toast.success("Corrected successfully");
     }
   }
+  "use client";
   async function replacePrevious() {
     let input = document.getElementById("input") as HTMLInputElement;
     let old = sessionStorage.getItem("oldSentence");
