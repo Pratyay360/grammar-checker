@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { Toaster, toast } from "sonner";
 
@@ -65,7 +66,7 @@ export default function Grammar() {
       toast.success("Corrected successfully");
     }
   }
-  "use client";
+
   async function replacePrevious() {
     let input = document.getElementById("input") as HTMLInputElement;
     let old = sessionStorage.getItem("oldSentence");
