@@ -32,12 +32,14 @@ export default async function genAi(s: string) {
     safetySettings,
   });
   const response = result.response;
-  let sentence: any = Array.isArray(response)
+  let text: any = Array.isArray(response)
     ? response[0]?.candidates?.[0]?.content?.parts?.[0]?.text
     : response?.candidates?.[0]?.content?.parts?.[0]?.text;
-  let sentenc: any = sentence?.replace(/"/g, "");
-  let senten: any = sentenc?.replace(/,"/g, "");
-  let sente: any = senten?.replace(/."/g, "");
-  let sent: any = sente?.split('"').join("");
-  return sent;
+
+  // Clean the text by removing unwanted quotes and punctuation
+  if (typeof text === 'string') {
+    text = text.replace(/[""]/g, "").trim(); // Remove double quotes
+  }
+
+  return text || s; // Return cleaned text or original if cleaning fails
 }
